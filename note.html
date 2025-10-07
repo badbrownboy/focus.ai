@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FOCUS AI</title>
+  <link rel="stylesheet" href="note.css">
+</head>
+<body>
+    <div class="main-layout">
+        <!-- Left Icons Section -->
+        <div class="left-icons">
+            <div class="icon-item" id="goalIcon" title="Goals">
+                <svg class="apple-icon" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+                    <circle cx="12" cy="12" r="6" fill="currentColor" opacity="0.2"/>
+                    <circle cx="12" cy="12" r="2" fill="currentColor"/>
+                    <path d="M12 2v4M12 18v4M22 12h-4M6 12H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <div class="icon-item" id="calendarIcon" title="Calendar">
+                <svg class="apple-icon" viewBox="0 0 24 24" fill="none">
+                    <rect x="3" y="4" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M16 2v4M8 2v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M3 10h18" stroke="currentColor" stroke-width="1.5"/>
+                    <circle cx="8" cy="16" r="1" fill="currentColor"/>
+                    <circle cx="12" cy="16" r="1" fill="currentColor"/>
+                    <circle cx="16" cy="16" r="1" fill="currentColor"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="container">
+            <h1>FOCUS AI</h1>
+            
+            <div id="checklistContainer">
+                <!-- Empty checkboxes will be added here dynamically -->
+            </div>
+
+            <!-- Add new item button -->
+            <div class="add-item-box">
+                <button class="add-btn" id="addBtn">
+                    <span class="plus-icon">+</span>
+                    <span class="add-text">Add new task</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Timer Section -->
+        <div class="timer-section">
+            <div class="motivation-text">Get 3-5 things done</div>
+            <div class="timer-display" id="timerDisplay">
+                <div class="time-unit">
+                    <span class="time-value" id="hours">00</span>
+                    <span class="time-label">Hours</span>
+                </div>
+                <div class="time-separator">:</div>
+                <div class="time-unit">
+                    <span class="time-value" id="minutes">00</span>
+                    <span class="time-label">Minutes</span>
+                </div>
+                <div class="time-separator">:</div>
+                <div class="time-unit">
+                    <span class="time-value" id="seconds">00</span>
+                    <span class="time-label">Seconds</span>
+                </div>
+            </div>
+            <div class="timer-subtitle" id="currentDate">October 7, 2025</div>
+        </div>
+    </div>
+
+    <script src="note.js"></script>
+</body>
+</html>

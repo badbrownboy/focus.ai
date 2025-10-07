@@ -1,0 +1,1167 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: #000000;
+    color: #ffffff;
+    min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport height for mobile */
+    padding: 0;
+    margin: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Main Layout */
+.main-layout {
+    display: flex;
+    min-height: 100vh;
+    min-height: 100dvh;
+    width: 100%;
+    max-width: 100vw;
+    padding: clamp(1rem, 3vw, 4rem);
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(1rem, 3vw, 3rem);
+    box-sizing: border-box;
+}
+
+/* Main Container */
+.container {
+    flex: 1;
+    max-width: clamp(280px, 60vw, 600px);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.5rem, 1.5vw, 1.2rem);
+    margin: 0 auto;
+    container-type: inline-size;
+    min-width: 280px;
+}
+
+/* Title */
+h1 {
+    text-align: center;
+    font-size: clamp(1.5rem, 5vw, 3.5rem);
+    font-weight: 700;
+    margin-top: clamp(-1rem, -2vw, -0.5rem);
+    margin-bottom: clamp(0.5rem, 2vw, 1.5rem);
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.9) 0%, 
+        rgba(138, 180, 248, 0.8) 25%,
+        rgba(196, 181, 253, 0.6) 50%,
+        rgba(251, 146, 60, 0.7) 75%,
+        rgba(255, 255, 255, 0.8) 100%
+    );
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: clamp(0.5px, 0.2vw, 2px);
+    line-height: 1.2;
+    position: relative;
+    animation: gradientFlow 4s ease-in-out infinite;
+}
+
+@keyframes gradientFlow {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    25% {
+        background-position: 50% 0%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    75% {
+        background-position: 50% 100%;
+    }
+}
+
+/* Checklist Container */
+#checklistContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* 2-column layout when more than 4 tasks */
+#checklistContainer.multi-column {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+/* Checklist Box */
+.checklist-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: clamp(10px, 2vw, 20px);
+    padding: clamp(15px, 3vw, 25px);
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 2vw, 20px);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: clamp(10px, 2vw, 20px);
+    cursor: grab;
+    min-height: clamp(50px, 8vw, 80px);
+}
+
+.checklist-box:last-child {
+    margin-bottom: 0;
+}
+
+.checklist-box:active {
+    cursor: grabbing;
+}
+
+/* Drag Handle - Hidden */
+.drag-handle {
+    display: none;
+}
+
+/* Priority Container */
+.priority-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 6px;
+    margin-right: 4px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.priority-container:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+/* Priority Indicator */
+.priority-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
+}
+
+.priority-indicator.low {
+    background-color: #4CAF50;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
+}
+
+.priority-indicator.medium {
+    background-color: #FF9800;
+    box-shadow: 0 0 8px rgba(255, 152, 0, 0.5);
+}
+
+.priority-indicator.high {
+    background-color: #F44336;
+    box-shadow: 0 0 8px rgba(244, 67, 54, 0.5);
+}
+
+.priority-indicator.urgent {
+    background-color: #9C27B0;
+    box-shadow: 0 0 8px rgba(156, 39, 176, 0.5);
+    animation: urgentPulse 2s ease-in-out infinite;
+}
+
+@keyframes urgentPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.7; }
+}
+
+/* Priority Indicator Hover Effects */
+.priority-container:hover .priority-indicator {
+    transform: scale(1.2);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.priority-container:hover .priority-indicator.low {
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.8);
+}
+
+.priority-container:hover .priority-indicator.medium {
+    box-shadow: 0 0 10px rgba(255, 152, 0, 0.8);
+}
+
+.priority-container:hover .priority-indicator.high {
+    box-shadow: 0 0 10px rgba(244, 67, 54, 0.8);
+}
+
+.priority-container:hover .priority-indicator.urgent {
+    box-shadow: 0 0 10px rgba(156, 39, 176, 0.8);
+}
+
+/* Priority Tooltip */
+.priority-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(20, 20, 20, 0.95);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    pointer-events: none;
+    z-index: 1000;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    margin-bottom: 5px;
+}
+
+.priority-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: rgba(20, 20, 20, 0.95);
+}
+
+.priority-container:hover .priority-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-2px);
+}
+
+/* Priority Selector */
+.priority-selector {
+    background: rgba(30, 30, 30, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 8px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    animation: fadeInScale 0.2s ease-out;
+}
+
+.priority-options {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 120px;
+}
+
+.priority-option {
+    background: none;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.priority-option:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(2px);
+}
+
+.priority-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Dragging States */
+.checklist-box.dragging {
+    opacity: 0.7;
+    transform: scale(1.05);
+    z-index: 1000;
+    box-shadow: 0 8px 24px rgba(255, 255, 255, 0.3);
+    border: 3px solid rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.checklist-box.drag-over {
+    border: 3px dashed rgba(255, 255, 255, 1);
+    background: rgba(255, 255, 255, 0.12);
+    transform: scale(0.98);
+}
+
+@keyframes pulse {
+    0% { 
+        transform: scale(0.98);
+        opacity: 0.8;
+    }
+    100% { 
+        transform: scale(1.02);
+        opacity: 1;
+    }
+}
+
+/* Swap Animation */
+.checklist-box.swapping-out {
+    animation: moveUp 0.4s ease-in-out forwards;
+    z-index: 999;
+}
+
+.checklist-box.swapping-in {
+    animation: moveDown 0.4s ease-in-out forwards;
+    z-index: 998;
+}
+
+@keyframes moveUp {
+    0% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-10px) scale(1.05); }
+    100% { transform: translateY(0) scale(1); }
+}
+
+@keyframes moveDown {
+    0% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(10px) scale(0.95); }
+    100% { transform: translateY(0) scale(1); }
+}
+
+/* Cross-fade effect during swap */
+.checklist-box.fading-out {
+    animation: fadeOut 0.3s ease forwards;
+}
+
+.checklist-box.fading-in {
+    animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeOut {
+    to { opacity: 0.3; transform: scale(0.95); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0.3; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.checklist-box:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(255, 255, 255, 0.1);
+}
+
+/* Custom Checkbox */
+.checklist-box input[type="checkbox"] {
+    width: 30px;
+    height: 30px;
+    margin: 0;
+    margin-right: 20px;
+    cursor: pointer;
+    position: relative;
+    appearance: none;
+    -webkit-appearance: none;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
+    background: transparent;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.checklist-box input[type="checkbox"]:hover {
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.checklist-box input[type="checkbox"]:checked {
+    background: #ffffff;
+    border-color: #ffffff;
+    transform: scale(1.05);
+}
+
+.checklist-box input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+    font-weight: bold;
+    color: #000000;
+}
+
+.checklist-box label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 500;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+/* Checked State */
+.checklist-box input[type="checkbox"]:checked + label {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.checklist-box input[type="checkbox"]:checked + label .task-input {
+    text-decoration: line-through;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Completed task styling */
+.checklist-box.completed {
+    background: rgba(255, 255, 255, 0.02);
+    opacity: 0.8;
+}
+
+/* Empty task (always available input) */
+.checklist-box.empty-task {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
+    border: 2px dashed rgba(255, 255, 255, 0.6);
+    margin-top: 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Empty task in multi-column layout spans both columns */
+#checklistContainer.multi-column .checklist-box.empty-task {
+    grid-column: 1 / -1;
+}
+
+/* Limit reached message in multi-column layout spans both columns */
+#checklistContainer.multi-column .limit-reached-message {
+    grid-column: 1 / -1;
+}
+
+.checklist-box.empty-task::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+.checklist-box.empty-task:hover {
+    border-color: rgba(255, 255, 255, 0.8);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06));
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+}
+
+.checklist-box.empty-task:focus-within {
+    border-color: #ffffff;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.checklist-box.empty-task input[type="checkbox"] {
+    opacity: 0.4;
+    cursor: not-allowed;
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.empty-input {
+    color: #ffffff !important;
+    font-weight: 500;
+}
+
+.empty-input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+    font-style: italic;
+    font-weight: 400;
+}
+
+.empty-input:focus::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Maximum tasks warning message */
+.max-tasks-message {
+    background: rgba(255, 193, 7, 0.15);
+    border: 2px solid rgba(255, 193, 7, 0.4);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 15px 0;
+    color: #ffc107;
+    font-weight: 500;
+    text-align: center;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Limit reached message */
+.limit-reached-message {
+    background: rgba(255, 255, 255, 0.03);
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: 20px;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.limit-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.limit-icon {
+    font-size: 2rem;
+    opacity: 0.7;
+}
+
+.limit-text {
+    text-align: left;
+}
+
+.limit-text strong {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.limit-text p {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        max-width: 100%;
+        gap: 16px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 30px;
+    }
+    
+    .checklist-box {
+        padding: 20px;
+    }
+    
+    .checklist-box label {
+        font-size: 1rem;
+    }
+    
+    /* Force single column on mobile even with more than 4 tasks */
+    #checklistContainer.multi-column {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    #checklistContainer.multi-column .checklist-box.empty-task,
+    #checklistContainer.multi-column .limit-reached-message {
+        grid-column: unset;
+    }
+}
+
+/* Add subtle animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.checklist-box {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.checklist-box:nth-child(2) { animation-delay: 0.1s; }
+.checklist-box:nth-child(3) { animation-delay: 0.2s; }
+.checklist-box:nth-child(4) { animation-delay: 0.3s; }
+.checklist-box:nth-child(5) { animation-delay: 0.4s; }
+
+/* Add Item Box */
+.add-item-box {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: clamp(12px, 2vw, 18px);
+    padding: clamp(18px, 3vw, 24px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    margin-top: clamp(16px, 2.5vw, 24px);
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.add-item-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.add-item-box:hover::before {
+    left: 100%;
+}
+
+.add-item-box:hover {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06));
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px);
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.15),
+        0 2px 8px rgba(255, 255, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Add Button */
+.add-btn {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.8);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: clamp(10px, 2vw, 14px);
+    padding: clamp(14px, 2.5vw, 18px) clamp(20px, 4vw, 28px);
+    border-radius: clamp(10px, 1.5vw, 14px);
+    transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    width: 100%;
+    justify-content: center;
+    letter-spacing: 0.3px;
+    text-transform: none;
+}
+
+.add-btn:hover {
+    color: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.08);
+    transform: scale(1.01);
+}
+
+.add-btn:active {
+    transform: scale(0.99);
+    transition-duration: 0.1s;
+}
+
+.plus-icon {
+    font-size: clamp(1.2rem, 2.8vw, 1.6rem);
+    font-weight: 300;
+    line-height: 1;
+    transition: transform 0.2s ease;
+}
+
+.add-btn:hover .plus-icon {
+    transform: rotate(90deg) scale(1.1);
+}
+
+.add-text {
+    font-weight: 500;
+    letter-spacing: 0.2px;
+}
+
+/* Empty state message */
+.empty-message {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 1rem;
+    padding: 40px 20px;
+    font-style: italic;
+}
+
+/* Editable input for new tasks */
+.task-input {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 1.4rem;
+    font-weight: 500;
+    width: 100%;
+    outline: none;
+    padding: 0;
+    line-height: 1.5;
+}
+
+.task-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Delete button for tasks */
+.delete-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    font-size: 1.4rem;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    margin-left: auto;
+    min-width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+/* Left Icons Section - Apple Style */
+.left-icons {
+    position: fixed;
+    left: clamp(15px, 3vw, 40px);
+    top: clamp(20px, 4vh, 50px);
+    display: flex;
+    flex-direction: row;
+    gap: clamp(12px, 1.5vw, 18px);
+    z-index: 100;
+}
+
+.icon-item {
+    width: clamp(44px, 5vw, 56px);
+    height: clamp(44px, 5vw, 56px);
+    background: rgba(255, 255, 255, 0.08);
+    border: 0.5px solid rgba(255, 255, 255, 0.15);
+    border-radius: clamp(12px, 2vw, 16px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    backdrop-filter: blur(20px);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 
+        0 1px 3px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.icon-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent 50%, rgba(255, 255, 255, 0.05));
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.icon-item:hover::before {
+    opacity: 1;
+}
+
+.icon-item:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.15),
+        0 2px 6px rgba(255, 255, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.icon-item:active {
+    transform: translateY(0) scale(0.98);
+    transition-duration: 0.1s;
+}
+
+.apple-icon {
+    width: clamp(20px, 2.5vw, 26px);
+    height: clamp(20px, 2.5vw, 26px);
+    color: rgba(255, 255, 255, 0.85);
+    transition: all 0.2s ease;
+}
+
+.icon-item:hover .apple-icon {
+    color: rgba(255, 255, 255, 0.95);
+    transform: scale(1.05);
+}
+
+/* Icon tooltips */
+.icon-item::after {
+    content: attr(title);
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(20, 20, 20, 0.95);
+    color: white;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    pointer-events: none;
+    z-index: 1000;
+    margin-left: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.icon-item:hover::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%) translateX(5px);
+}
+
+/* Timer Section */
+.timer-section {
+    position: fixed;
+    right: clamp(5px, 1vw, 20px);
+    top: clamp(5px, 2vh, 20px);
+    width: clamp(180px, 15vw, 240px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: clamp(0.5rem, 1vw, 1rem);
+    padding: clamp(5px, 1vw, 15px);
+    z-index: 100;
+    transition: all 0.3s ease;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: clamp(8px, 1.5vw, 12px);
+    backdrop-filter: blur(5px);
+}
+
+.motivation-text {
+    font-size: clamp(0.7rem, 2vw, 1rem);
+    font-weight: 500;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: clamp(4px, 1vw, 8px);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    line-height: 1.2;
+}
+
+.timer-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(6px, 1vw, 10px);
+    margin-bottom: clamp(8px, 1.5vw, 12px);
+    text-align: center;
+}
+
+.time-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.time-value {
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    font-weight: 600;
+    color: #ffffff;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+    min-width: clamp(25px, 4vw, 35px);
+}
+
+.time-label {
+    font-size: clamp(0.5rem, 1.2vw, 0.65rem);
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: clamp(0.3px, 0.1vw, 0.8px);
+}
+
+.time-separator {
+    font-size: clamp(0.8rem, 2vw, 1.2rem);
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0 clamp(2px, 0.5vw, 4px);
+    animation: blink 2s ease-in-out infinite;
+}
+
+.timer-subtitle {
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+    margin-top: clamp(8px, 1.5vw, 12px);
+    text-shadow: 0 2px 8px rgba(255, 255, 255, 0.3);
+    letter-spacing: clamp(0.3px, 0.1vw, 0.6px);
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.9) 0%, 
+        rgba(138, 180, 248, 0.8) 25%,
+        rgba(196, 181, 253, 0.6) 50%,
+        rgba(251, 146, 60, 0.7) 75%,
+        rgba(255, 255, 255, 0.8) 100%
+    );
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientFlow 4s ease-in-out infinite;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0.3; }
+}
+
+/* Responsive Design */
+/* Ultra-wide and Large Desktop (1440px+) */
+@media (min-width: 1440px) {
+    .container {
+        max-width: 650px;
+    }
+    .timer-section {
+        width: 240px;
+        right: 15px;
+    }
+    .main-layout {
+        padding: 3rem;
+        align-items: center;
+    }
+}
+
+/* Standard Desktop (1024px - 1439px) */
+@media (min-width: 1024px) and (max-width: 1439px) {
+    .container {
+        max-width: 550px;
+    }
+    .timer-section {
+        width: 220px;
+        right: 10px;
+    }
+    .main-layout {
+        align-items: center;
+    }
+}
+
+/* Tablet Landscape and Small Desktop (768px - 1023px) */
+@media (max-width: 1023px) {
+    .main-layout {
+        flex-direction: column;
+        align-items: center;
+        gap: clamp(1rem, 3vw, 2rem);
+        padding: clamp(1rem, 2vw, 2rem);
+    }
+    .timer-section {
+        position: static;
+        width: 100%;
+        max-width: min(300px, 70vw);
+        margin: 0 auto;
+        order: -1;
+        padding: clamp(0.5rem, 1.5vw, 1rem);
+        background: rgba(0, 0, 0, 0.3);
+    }
+    .container {
+        max-width: min(500px, 90vw);
+    }
+    .left-icons {
+        position: static;
+        flex-direction: row;
+        justify-content: center;
+        gap: clamp(16px, 3vw, 24px);
+        margin-bottom: 1rem;
+        order: -2;
+    }
+}
+
+/* Tablet Portrait (481px - 768px) */
+@media (max-width: 768px) {
+    .container {
+        max-width: min(450px, 95vw);
+    }
+    .checklist-box {
+        padding: clamp(15px, 3vw, 20px);
+        gap: clamp(12px, 2.5vw, 15px);
+        border-radius: 12px;
+    }
+    .time-value {
+        font-size: clamp(1.5rem, 4vw, 2rem);
+    }
+    .motivation-text {
+        font-size: clamp(1rem, 3vw, 1.3rem);
+    }
+}
+
+/* Mobile Landscape (481px - 640px) */
+@media (max-width: 640px) {
+    .main-layout {
+        padding: clamp(0.5rem, 2vw, 1rem);
+        gap: clamp(0.75rem, 2vw, 1.25rem);
+    }
+    .container {
+        gap: clamp(0.5rem, 2vw, 1rem);
+        max-width: min(400px, 98vw);
+    }
+    .timer-section {
+        padding: clamp(0.5rem, 2vw, 1rem);
+        gap: clamp(0.75rem, 2vw, 1.25rem);
+    }
+    .left-icons {
+        gap: clamp(12px, 2.5vw, 16px);
+    }
+    .icon-item {
+        width: clamp(40px, 7vw, 48px);
+        height: clamp(40px, 7vw, 48px);
+        border-radius: clamp(10px, 1.5vw, 14px);
+    }
+    .apple-icon {
+        width: clamp(18px, 3vw, 22px);
+        height: clamp(18px, 3vw, 22px);
+    }
+    /* Force single column layout */
+    #checklistContainer.multi-column {
+        display: flex !important;
+        flex-direction: column;
+        gap: clamp(0.5rem, 2vw, 1rem);
+    }
+}
+
+/* Mobile Portrait (320px - 480px) */
+@media (max-width: 480px) {
+    .main-layout {
+        padding: clamp(0.25rem, 1.5vw, 0.75rem);
+        gap: clamp(0.5rem, 2vw, 1rem);
+    }
+    .container {
+        gap: clamp(0.25rem, 1.5vw, 0.75rem);
+    }
+    .checklist-box {
+        padding: clamp(12px, 3vw, 16px);
+        gap: clamp(10px, 2vw, 12px);
+        min-height: 50px;
+    }
+    .task-input {
+        font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+    }
+    .time-value {
+        font-size: clamp(0.8rem, 4vw, 1.2rem);
+        min-width: clamp(25px, 6vw, 35px);
+    }
+    .time-label {
+        font-size: clamp(0.6rem, 2vw, 0.75rem);
+    }
+}
+
+/* Very Small Screens (up to 320px) */
+@media (max-width: 320px) {
+    .main-layout {
+        padding: 0.25rem;
+        gap: 0.5rem;
+    }
+    .container {
+        gap: 0.25rem;
+    }
+    .checklist-box {
+        padding: 10px;
+        gap: 8px;
+        border-radius: 8px;
+        min-height: 45px;
+    }
+    .time-value {
+        font-size: 0.7rem;
+        min-width: 20px;
+    }
+    .time-label {
+        font-size: 0.6rem;
+    }
+    .motivation-text {
+        font-size: 0.8rem;
+    }
+}
+
+/* Touch device optimizations */
+@media (pointer: coarse) {
+    .checklist-box input[type="checkbox"] {
+        width: 35px;
+        height: 35px;
+    }
+    .delete-btn {
+        min-width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+    .add-btn {
+        padding: 16px 24px;
+        font-size: 1.1rem;
+    }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .checklist-box {
+        border-width: 0.5px;
+    }
+}
+
+.delete-btn:hover {
+    color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.2);
+    border-color: rgba(255, 107, 107, 0.4);
+    transform: scale(1.1);
+}
+
